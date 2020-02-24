@@ -157,10 +157,28 @@ CI_API void enableDepthRead( bool enable = true );
 //! Enables or disables writing to depth buffer; analogous to calling glDepthMask( \p enable ); Note that reading must also be enabled for writing to have any effect.
 CI_API void enableDepthWrite( bool enable = true );
 //! Enables or disables writing to and reading / testing from depth buffer
-CI_API inline void enableDepth( bool enable = true ) { enableDepthRead( enable ); enableDepthWrite( enable ); }
-
+CI_API inline void enableDepth( bool enable = true ) { enableDepthRead( enable ); enableDepthWrite( enable ); 
+                                                      
 //! Sets the depth range.
 CI_API void depthRange( double nearVal, double farVal );
+
+//! Sets the polygon offset.
+CI_API void polygonOffset( float factor, float units );
+#if ! defined( CINDER_GL_ES )
+//! Enables the polygon offset for points.
+CI_API inline void enablePolygonOffsetPoint( bool enable = true ) { gl::enable( GL_POLYGON_OFFSET_POINT, enable ); }
+//! Disables the polygon offset for points.
+CI_API inline void disablePolygonOffsetPoint() { enablePolygonOffsetPoint( false ); }
+//! Enables the polygon offset for lines.
+CI_API inline void enablePolygonOffsetLine( bool enable = true ) { gl::enable( GL_POLYGON_OFFSET_LINE, enable ); }
+//! Disables the polygon offset for lines.
+CI_API inline void disablePolygonOffsetLine() { enablePolygonOffsetLine( false ); }
+#endif
+//! Enables the polygon offset for polygons.
+CI_API inline void enablePolygonOffsetFill( bool enable = true ) { gl::enable( GL_POLYGON_OFFSET_FILL, enable ); }
+//! Disables the polygon offset for polygons.
+CI_API inline void disablePolygonOffsetFill() { enablePolygonOffsetFill( false ); }
+
 
 //! Enables or disables the stencil test operation, which controls reading and writing to the stencil buffer. Analagous to `glEnable( GL_STENCIL_TEST, enable );`
 CI_API void enableStencilTest( bool enable = true );
