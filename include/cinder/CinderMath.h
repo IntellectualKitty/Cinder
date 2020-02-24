@@ -63,6 +63,7 @@ struct CI_API math
 	}
 	static T	pow   (T x, T y)	{return ::pow (double(x), double(y));}
 	static T	sqrt  (T x)		{return ::sqrt (double(x));}
+	static T	sqr   (T x)		{return x * x;}
 #if defined( _MSC_VER )
 	static T	cbrt( T x )		{ return ( x > 0 ) ? (::pow( x, 1.0 / 3.0 )) : (- ::pow( -x, 1.0 / 3.0 ) ); }
 #else
