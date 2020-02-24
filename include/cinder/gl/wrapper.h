@@ -176,6 +176,9 @@ CI_API inline void enablePolygonOffsetFill( bool enable = true ) { gl::enable( G
 //! Disables the polygon offset for polygons.
 CI_API inline void disablePolygonOffsetFill() { enablePolygonOffsetFill( false ); }
 
+//! Sets the depth range.
+CI_API void depthRange( double nearVal, double farVal );
+
 //! Enables or disables the stencil test operation, which controls reading and writing to the stencil buffer. Analagous to `glEnable( GL_STENCIL_TEST, enable );`
 CI_API void enableStencilTest( bool enable = true );
 //! Disables the stencil test operation. Analagous to `glEnable( GL_STENCIL_TEST, false );`

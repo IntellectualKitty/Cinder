@@ -1545,7 +1545,7 @@ GLenum Context::getDepthFunc()
 	return mDepthFuncStack.back();
 }
 
-//////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 // PolygonOffset
 void Context::polygonOffset( float factor, float units )
 {
@@ -1587,6 +1587,64 @@ std::pair<float, float> Context::getPolygonOffset()
 	}
 
 	return mPolygonOffsetStack.back();
+}
+  
+// DepthRange
+void Context::depthRange( double nearVal, double farVal )
+{
+	if( setStackState( mDepthRangeStack, std::pair<double, double>( nearVal, farVal ) ) )
+#if ! defined( CINDER_GL_ES )
+		glDepthRange( nearVal, farVal );
+#else
+		glDepthRangef( static_cast<float>( nearVal ), static_cast<float>( farVal ) );
+#endif
+}
+
+void Context::pushDepthRange( double nearVal, double farVal )
+{
+	if( pushStackState( mDepthRangeStack, std::pair<double, double>( nearVal, farVal ) ) )
+#if ! defined( CINDER_GL_ES )
+		glDepthRange( nearVal, farVal );
+#else
+		glDepthRangef( static_cast<float>( nearVal ), static_cast<float>( farVal ) );
+#endif
+}
+
+void Context::pushDepthRange()
+{
+	pushStackState( mDepthRangeStack, getDepthRange() );
+}
+
+void Context::popDepthRange( bool forceRestore )
+{
+	if( mDepthRangeStack.empty() )
+		CI_LOG_E( "DepthRange stack underflow" );
+	else if( popStackState( mDepthRangeStack ) || forceRestore ) {
+		auto depthRange = getDepthRange();
+#if ! defined( CINDER_GL_ES )
+		glDepthRange( depthRange.first, depthRange.second );
+#else
+		glDepthRangef( static_cast<float>( depthRange.first ), static_cast<float>( depthRange.second ) );
+#endif
+	}
+}
+
+std::pair<double, double> Context::getDepthRange()
+{
+	if( mDepthRangeStack.empty() ) {
+#if ! defined( CINDER_GL_ES )
+		GLdouble params[2];
+		glGetDoublev( GL_DEPTH_RANGE, params );
+#else
+		GLfloat params[2];
+		glGetFloatv( GL_DEPTH_RANGE, params );
+#endif
+		// push twice to account for inevitable pop to follow
+		mDepthRangeStack.push_back( std::pair<double, double>( params[0], params[1] ) );
+		mDepthRangeStack.push_back( std::pair<double, double>( params[0], params[1] ) );
+	}
+
+	return mDepthRangeStack.back();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
