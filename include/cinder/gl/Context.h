@@ -545,6 +545,7 @@ class CI_API Context {
 
 	std::vector<GLboolean>		mDepthMaskStack;
 	std::vector<GLenum>			mDepthFuncStack;
+	std::vector<std::pair<float,float>>		mPolygonOffsetStack;
 	
 	std::map<GLenum,std::vector<GLboolean>>	mBoolStateStack;
 	// map<TextureUnit,map<TextureTarget,vector<Binding ID Stack>>>
