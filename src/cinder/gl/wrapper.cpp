@@ -387,6 +387,11 @@ void disableDepthWrite()
 	ctx->depthMask( GL_FALSE );
 }
 
+void polygonOffset( float factor, float units )
+{
+	gl::context()->polygonOffset( factor, units );
+}
+  
 void depthRange( double nearVal, double farVal )
 {
 	gl::context()->depthRange( nearVal, farVal );

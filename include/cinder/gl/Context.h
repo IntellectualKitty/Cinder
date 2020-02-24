@@ -371,6 +371,17 @@ class CI_API Context {
 	//! Returns the depth buffer comparison function, either \c GL_NEVER, \c GL_LESS, \c GL_EQUAL, \c GL_LEQUAL, \c GL_GREATER, \c GL_NOTEQUAL, \c GL_GEQUAL or \c GL_ALWAYS.
 	GLenum		getDepthFunc();
 
+	//! Set the polygon offset. Analogous to glPolygonOffset().
+	void						polygonOffset( float factor, float units );
+	//! Pushes and sets the current polygon offset.
+	void						pushPolygonOffset( float factor, float units );
+	//! Duplicates and pushes the current polygon offset.
+	void						pushPolygonOffset();
+	//! Sets the current polygon offset. If \a forceRestore then redundancy checks are skipped and the hardware state is always set.
+	void						popPolygonOffset( bool forceRestore = false );
+	//! Returns the current polygon offset.
+	std::pair<float, float>		getPolygonOffset();
+
 	//! Set the depth range. Analogous to glDepthRange().
 	void						depthRange( double nearVal, double farVal );
 	//! Pushes and sets the current depth range.
@@ -545,6 +556,7 @@ class CI_API Context {
 
 	std::vector<GLboolean>		mDepthMaskStack;
 	std::vector<GLenum>			mDepthFuncStack;
+	std::vector<std::pair<float,float>>		mPolygonOffsetStack;
 	std::vector<std::pair<double,double>>	mDepthRangeStack;
 	
 	std::map<GLenum,std::vector<GLboolean>>	mBoolStateStack;

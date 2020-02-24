@@ -159,6 +159,23 @@ CI_API void enableDepthWrite( bool enable = true );
 //! Enables or disables writing to and reading / testing from depth buffer
 CI_API inline void enableDepth( bool enable = true ) { enableDepthRead( enable ); enableDepthWrite( enable ); }
 
+//! Sets the polygon offset.
+CI_API void polygonOffset( float factor, float units );
+#if ! defined( CINDER_GL_ES )
+//! Enables the polygon offset for points.
+CI_API inline void enablePolygonOffsetPoint( bool enable = true ) { gl::enable( GL_POLYGON_OFFSET_POINT, enable ); }
+//! Disables the polygon offset for points.
+CI_API inline void disablePolygonOffsetPoint() { enablePolygonOffsetPoint( false ); }
+//! Enables the polygon offset for lines.
+CI_API inline void enablePolygonOffsetLine( bool enable = true ) { gl::enable( GL_POLYGON_OFFSET_LINE, enable ); }
+//! Disables the polygon offset for lines.
+CI_API inline void disablePolygonOffsetLine() { enablePolygonOffsetLine( false ); }
+#endif
+//! Enables the polygon offset for polygons.
+CI_API inline void enablePolygonOffsetFill( bool enable = true ) { gl::enable( GL_POLYGON_OFFSET_FILL, enable ); }
+//! Disables the polygon offset for polygons.
+CI_API inline void disablePolygonOffsetFill() { enablePolygonOffsetFill( false ); }
+
 //! Sets the depth range.
 CI_API void depthRange( double nearVal, double farVal );
 
