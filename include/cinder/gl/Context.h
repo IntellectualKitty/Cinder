@@ -371,6 +371,17 @@ class CI_API Context {
 	//! Returns the depth buffer comparison function, either \c GL_NEVER, \c GL_LESS, \c GL_EQUAL, \c GL_LEQUAL, \c GL_GREATER, \c GL_NOTEQUAL, \c GL_GEQUAL or \c GL_ALWAYS.
 	GLenum		getDepthFunc();
 
+	//! Set the polygon offset. Analogous to glPolygonOffset().
+	void						polygonOffset( float factor, float units );
+	//! Pushes and sets the current polygon offset.
+	void						pushPolygonOffset( float factor, float units );
+	//! Duplicates and pushes the current polygon offset.
+	void						pushPolygonOffset();
+	//! Sets the current polygon offset. If \a forceRestore then redundancy checks are skipped and the hardware state is always set.
+	void						popPolygonOffset( bool forceRestore = false );
+	//! Returns the current polygon offset.
+	std::pair<float, float>		getPolygonOffset();
+
 #if ! defined( CINDER_GL_ES )
 	//! Sets the current polygon rasterization mode. \a face must be \c GL_FRONT_AND_BACK. \c GL_POINT, \c GL_LINE & \c GL_FILL are legal values for \a mode.
 	void		polygonMode( GLenum face, GLenum mode );
