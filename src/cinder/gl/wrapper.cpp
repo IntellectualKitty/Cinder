@@ -387,6 +387,11 @@ void disableDepthWrite()
 	ctx->depthMask( GL_FALSE );
 }
 
+void polygonOffset( float factor, float units )
+{
+	gl::context()->polygonOffset( factor, units );
+}
+
 void enableStencilTest( bool enable )
 {
     gl::enable( GL_STENCIL_TEST, enable );
